@@ -14,8 +14,8 @@ class EstudianteController extends Controller
      */
     public function index()
     {
-        $estudiantes = Estudiante::all();
-        return $estudiantes;
+        $estudiantes = Estudiante::orderBy('created_at','desc')->get();
+        return view('estudiante.index', compact('estudiantes'));
     }
 
     /**
@@ -25,7 +25,7 @@ class EstudianteController extends Controller
      */
     public function create()
     {
-        //
+        return view('estudiante.create');
     }
 
     /**
@@ -48,7 +48,7 @@ class EstudianteController extends Controller
         $this->validate($request,$reglas);
         $campos = $request->all();
         $estudiante = Estudiante::create($campos);
-        return $estudiante;
+        return redirect()->route('estudiante.index')->with('info',"El estudiante se creo exitosamente");
     }
 
     /**
@@ -70,7 +70,8 @@ class EstudianteController extends Controller
      */
     public function edit(Estudiante $estudiante)
     {
-        //
+        $estudiantes= [$estudiante];
+        return view('estudiante.update', compact('estudiante'));
     }
 
     /**
@@ -88,7 +89,7 @@ class EstudianteController extends Controller
         $this->validate($request,$reglas);
         $estudiante->fill($request->all());
         $estudiante->save();
-        return $estudiante;
+        return redirect()->route('estudiante.index')->with('info',"El estudiante se actualizó exitosamente");
     }
 
     /**
@@ -100,6 +101,6 @@ class EstudianteController extends Controller
     public function destroy(Estudiante $estudiante)
     {
         $estudiante->delete();
-        return $estudiante;
+        return redirect()->route('estudiante.index')->with('info', "Se elimininó el estudiante exitosamente");
     }
 }
