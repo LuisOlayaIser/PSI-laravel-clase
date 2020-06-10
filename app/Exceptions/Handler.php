@@ -56,7 +56,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
-        if ($exception instanceof ValidationException) {
+        /* if ($exception instanceof ValidationException) {
             $this->convertValidationExceptionToResponse($exception, $request);
         }
         if ($exception instanceof MethodNotAllowedHttpException) {
@@ -82,7 +82,7 @@ class Handler extends ExceptionHandler
             $codigo = $exception->getStatusCode();
             $mensaje= $exception->getMessage();
             return response()->json(['error'=> $mensaje],$codigo);
-        }
+        } */
 
         if(config('app.debug')){
             return parent::render($request, $exception);
@@ -97,10 +97,10 @@ class Handler extends ExceptionHandler
      * @param  \Illuminate\Http\Request  $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    protected function convertValidationExceptionToResponse(ValidationException $e, $request)
+   /*  protected function convertValidationExceptionToResponse(ValidationException $e, $request)
     {
 
         $errors = $e->validator->errors()->getMessages();
         return response()->json(['error' => $errors], 422);
-    }
+    } */
 }

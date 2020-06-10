@@ -84,7 +84,13 @@ class EstudianteController extends Controller
     public function update(Request $request, Estudiante $estudiante)
     {
         $reglas = [
-            "email" => 'email',
+            "nombre"=> 'required',
+            "apellido" => 'required',
+            "telefono" => 'required',
+            "email" => 'required|email',
+            "genero" => 'required',
+            "direccion" => 'required',
+            "nacimiento" => 'required'
         ];
         $this->validate($request,$reglas);
         $estudiante->fill($request->all());
