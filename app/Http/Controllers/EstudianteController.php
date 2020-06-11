@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Docente;
 use App\Estudiante;
 use Illuminate\Http\Request;
 
@@ -59,7 +60,11 @@ class EstudianteController extends Controller
      */
     public function show(Estudiante $estudiante)
     {
-        return $estudiante;
+        $materias = $estudiante->materia->each(function ($data){
+            $data->docente = Docente::findOrFail($data->docente_id);
+        });
+        //return $materias;
+        return view('estudiante.show', compact('estudiante','materias'));
     }
 
     /**
@@ -70,7 +75,6 @@ class EstudianteController extends Controller
      */
     public function edit(Estudiante $estudiante)
     {
-        $estudiantes= [$estudiante];
         return view('estudiante.update', compact('estudiante'));
     }
 

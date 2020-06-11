@@ -45,9 +45,17 @@
                                 <label for="">Email</label>
                                 <input type="text" class="form-control" name="email" value="{{old('email')}}">
                             </div>
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <label for="">Genero</label>
                                 <input type="text" class="form-control" name="genero" value="{{old('genero')}}">
+                            </div> -->
+                            <div class="form-group">
+                                <label for="">Genero</label>
+                                <select name="genero" id="" class="form-control">
+                                    <option value="m" selected>Masculino</option>
+                                    <option value="f">Femenino</option>
+                                </select>
+                                
                             </div>
                             <div class="form-group">
                                 <label for="">Direccion</label>

@@ -29,9 +29,9 @@
                                 <th>Apellido</th>
                                 <th>Telefono</th>
                                 <th>Email</th>
-                                <th>Genero</th>
+                                <!-- <th>Genero</th>
                                 <th>Direccion</th>
-                                <th>Nacimiento</th>
+                                <th>Nacimiento</th> -->
                                 <th>Acciones</th>
                             </thead>
                             <tbody>
@@ -41,13 +41,15 @@
                                     <td>{{ $estudiante->apellido }} </td>
                                     <td>{{$estudiante->telefono}} </td>
                                     <td>{{$estudiante->email}} </td>
-                                    <td>{{$estudiante->genero}} </td>
+                                    <!-- <td>{{$estudiante->genero=='m' ? "Masculino": "Femenino"}} </td>
                                     <td>{{$estudiante->direccion}} </td>
-                                    <td>{{$estudiante->nacimiento}} </td>
+                                    <td>{{$estudiante->nacimiento}} </td> -->
                                     <td>
+
+                                        <a href="{{route('estudiante.show',$estudiante->id)}}"  class="btn btn-success">Ver</a>
                                         <a href="{{route('estudiante.edit',$estudiante->id)}}"  class="btn btn-warning">Editar</a>
-                                        <!-- <a href="javascript: document.getElementById('delete-{{$estudiante->id}}').submit()" class="btn btn-danger">Eliminar</a> -->
-                                        <form id="delete-{{$estudiante->id}}" action="{{route('estudiante.destroy', $estudiante->id)}}" method="post">
+                                        
+                                        <form  action="{{route('estudiante.destroy', $estudiante->id)}}" method="post">
                                             @method('delete')
                                             @csrf
                                             <button type="submit" class="btn btn-danger">Eliminar</button>

@@ -18,6 +18,8 @@ Route::get('/', function () {
 });
 
 Route::resource('estudiante', 'EstudianteController');
+Route::resource('docente', 'DocenteController');
+Route::resource('materia', 'MateriaController');
 /*
  Route::get('estudiante', 'EstudianteController@index')->name('estudiante.index');
  Route::get('estudiante/crear', 'EstudianteController@create')->name('estudiante.create'); 
