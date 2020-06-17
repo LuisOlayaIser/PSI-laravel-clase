@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Estudiantes</title>
+    <title>Docentes</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 </head>
 
@@ -13,8 +13,8 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        Listado de Estudiantes
-                        <a href="{{route('estudiante.create')}}" class="btn btn-success btn-sm float-right">Nuevo</a>
+                        Listado de Docentes
+                        <a href="{{route('docente.create')}}" class="btn btn-success btn-sm float-right">Nuevo</a>
                     </div>
                     <div class="card-body">
                     @if(session('error'))
@@ -32,28 +32,29 @@
                                 <th>Nombre</th>
                                 <th>Apellido</th>
                                 <th>Telefono</th>
-                                <th>Email</th>
+                                <th>Tipo</th>
+
                                 <!-- <th>Genero</th>
                                 <th>Direccion</th>
                                 <th>Nacimiento</th> -->
                                 <th>Acciones</th>
                             </thead>
                             <tbody>
-                                @foreach($estudiantes as $estudiante)
+                                @foreach($docentes as $docente)
                                 <tr>
-                                    <td>{{ $estudiante->nombre }}</td>
-                                    <td>{{ $estudiante->apellido }} </td>
-                                    <td>{{$estudiante->telefono}} </td>
-                                    <td>{{$estudiante->email}} </td>
-                                    <!-- <td>{{$estudiante->genero=='m' ? "Masculino": "Femenino"}} </td>
-                                    <td>{{$estudiante->direccion}} </td>
-                                    <td>{{$estudiante->nacimiento}} </td> -->
+                                    <td>{{ $docente->nombre }}</td>
+                                    <td>{{ $docente->apellido }} </td>
+                                    <td>{{$docente->telefono}} </td>
+                                    <td>{{$docente->email}} </td>
+                                    <!-- <td>{{$docente->genero=='m' ? "Masculino": "Femenino"}} </td>
+                                    <td>{{$docente->direccion}} </td>
+                                    <td>{{$docente->nacimiento}} </td> -->
                                     <td>
 
-                                        <a href="{{route('estudiante.show',$estudiante->id)}}"  class="btn btn-success">Ver</a>
-                                        <a href="{{route('estudiante.edit',$estudiante->id)}}"  class="btn btn-warning">Editar</a>
+                                        <a href="{{route('docente.show',$docente->id)}}"  class="btn btn-success">Ver</a>
+                                        <a href="{{route('docente.edit',$docente->id)}}"  class="btn btn-warning">Editar</a>
                                         
-                                        <form  action="{{route('estudiante.destroy', $estudiante->id)}}" method="post">
+                                        <form  action="{{route('docente.destroy', $docente->id)}}" method="post">
                                             @method('delete')
                                             @csrf
                                             <button type="submit" class="btn btn-danger">Eliminar</button>

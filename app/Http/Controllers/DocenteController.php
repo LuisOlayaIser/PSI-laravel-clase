@@ -14,8 +14,8 @@ class DocenteController extends Controller
      */
     public function index()
     {
-        $docentes = Docente::all();
-        return $docentes;
+        $docentes = Docente::orderBy('created_at','desc')->get();
+        return view('docente.index', compact('docentes'));
     }
 
     /**
@@ -25,7 +25,7 @@ class DocenteController extends Controller
      */
     public function create()
     {
-        //
+        return view('docente.create');
     }
 
     /**
@@ -49,7 +49,7 @@ class DocenteController extends Controller
         $this->validate($request,$reglas);
         $campos = $request->all();
         $docente = Docente::create($campos);
-        return $docente;
+        return redirect()->route('docente.index')->with('info',"El docente se creó exitosamente");
     }
 
     /**
@@ -60,7 +60,15 @@ class DocenteController extends Controller
      */
     public function show(Docente $docente)
     {
-        return $docente;
+        $materias = $docente->materia;
+        $estudiantes = $docente->materia()
+        ->with('estudiante')
+        ->get()
+        ->pluck("estudiante")
+        ->collapse()
+        ->unique()
+        ->values();
+        return view('docente.show', compact('docente','estudiantes','materias'));
     }
 
     /**
@@ -71,7 +79,7 @@ class DocenteController extends Controller
      */
     public function edit(Docente $docente)
     {
-        //
+        return view('docente.update', compact('docente'));
     }
 
     /**
@@ -84,12 +92,19 @@ class DocenteController extends Controller
     public function update(Request $request, Docente $docente)
     {
         $reglas = [
-            "email" => 'email',
+            "nombre"=> 'required',
+            "apellido" => 'required',
+            "telefono" => 'required',
+            "email" => 'required|email',
+            "genero" => 'required',
+            "direccion" => 'required',
+            "nacimiento" => 'required',
+            "tipo" => 'required'
         ];
         $this->validate($request,$reglas);
         $docente->fill($request->all());
         $docente->save();
-        return $docente;
+        return redirect()->route('docente.index')->with('info',"El docente se actualizó exitosamente");
     }
 
     /**
@@ -100,7 +115,11 @@ class DocenteController extends Controller
      */
     public function destroy(Docente $docente)
     {
-        $docente->delete();
-        return $docente;
+        try {
+            $docente->delete();
+        return redirect()->route('docente.index')->with('info', "Se elimininó el docente exitosamente");
+        } catch (\Throwable $th) {
+            return redirect()->route('docente.index')->with('error', "No se puede elimininar el docente porque esta relacionado");
+        }
     }
 }

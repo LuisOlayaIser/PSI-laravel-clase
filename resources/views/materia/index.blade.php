@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Estudiantes</title>
+    <title>Materias</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 </head>
 
@@ -13,8 +13,8 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        Listado de Estudiantes
-                        <a href="{{route('estudiante.create')}}" class="btn btn-success btn-sm float-right">Nuevo</a>
+                        Listado de Materias
+                        <a href="{{route('materia.create')}}" class="btn btn-success btn-sm float-right">Nuevo</a>
                     </div>
                     <div class="card-body">
                     @if(session('error'))
@@ -30,30 +30,27 @@
                         <table class="table table-hover table-sm">
                             <thead>
                                 <th>Nombre</th>
-                                <th>Apellido</th>
-                                <th>Telefono</th>
-                                <th>Email</th>
-                                <!-- <th>Genero</th>
-                                <th>Direccion</th>
-                                <th>Nacimiento</th> -->
+                                <th>Creditos</th>
+                                <th>horas</th>
+                                <th>Docente</th>
                                 <th>Acciones</th>
                             </thead>
                             <tbody>
-                                @foreach($estudiantes as $estudiante)
+                                @foreach($materias as $materia)
                                 <tr>
-                                    <td>{{ $estudiante->nombre }}</td>
-                                    <td>{{ $estudiante->apellido }} </td>
-                                    <td>{{$estudiante->telefono}} </td>
-                                    <td>{{$estudiante->email}} </td>
-                                    <!-- <td>{{$estudiante->genero=='m' ? "Masculino": "Femenino"}} </td>
-                                    <td>{{$estudiante->direccion}} </td>
-                                    <td>{{$estudiante->nacimiento}} </td> -->
+                                    <td>{{ $materia->nombre }}</td>
+                                    <td>{{ $materia->creditos }} </td>
+                                    <td>{{$materia->horas}} </td>
+                                    <td>{{$materia->docente->nombre}} {{$materia->docente->apellido}} </td>
+                                    <!-- <td>{{$materia->genero=='m' ? "Masculino": "Femenino"}} </td>
+                                    <td>{{$materia->direccion}} </td>
+                                    <td>{{$materia->nacimiento}} </td> -->
                                     <td>
 
-                                        <a href="{{route('estudiante.show',$estudiante->id)}}"  class="btn btn-success">Ver</a>
-                                        <a href="{{route('estudiante.edit',$estudiante->id)}}"  class="btn btn-warning">Editar</a>
+                                        <a href="{{route('materia.show',$materia->id)}}"  class="btn btn-success">Ver</a>
+                                        <a href="{{route('materia.edit',$materia->id)}}"  class="btn btn-warning">Editar</a>
                                         
-                                        <form  action="{{route('estudiante.destroy', $estudiante->id)}}" method="post">
+                                        <form  action="{{route('materia.destroy', $materia->id)}}" method="post">
                                             @method('delete')
                                             @csrf
                                             <button type="submit" class="btn btn-danger">Eliminar</button>

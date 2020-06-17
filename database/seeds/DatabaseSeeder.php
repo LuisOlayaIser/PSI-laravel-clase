@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // $this->call(UserSeeder::class);
-        DB::statement("SET FOREIGN_KEY_CHECKS=0");
+        //DB::statement("SET FOREIGN_KEY_CHECKS=0");
         Estudiante::truncate();
         Docente::truncate();
         Materia::truncate();

@@ -49,7 +49,7 @@ class EstudianteController extends Controller
         $this->validate($request,$reglas);
         $campos = $request->all();
         $estudiante = Estudiante::create($campos);
-        return redirect()->route('estudiante.index')->with('info',"El estudiante se creo exitosamente");
+        return redirect()->route('estudiante.index')->with('info',"El estudiante se creó exitosamente");
     }
 
     /**
@@ -110,7 +110,12 @@ class EstudianteController extends Controller
      */
     public function destroy(Estudiante $estudiante)
     {
-        $estudiante->delete();
+        try {
+            $estudiante->delete();
         return redirect()->route('estudiante.index')->with('info', "Se elimininó el estudiante exitosamente");
+        } catch (\Throwable $th) {
+            return redirect()->route('estudiante.index')->with('error', "No se puede elimininar el estudiante porque esta relacionado");
+        }
+        
     }
 }

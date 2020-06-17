@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Docente;
 use App\Materia;
 use Illuminate\Http\Request;
 
@@ -14,8 +15,11 @@ class MateriaController extends Controller
      */
     public function index()
     {
-        $materias = Materia::all();
-        return $materias;
+        $materias = Materia::orderBy('created_at','desc')->get();
+        $materias->each(function ($data){
+            $data->docente = Docente::findOrFail($data->docente_id);
+        });
+        return view('materia.index', compact('materias'));
     }
 
     /**
@@ -25,7 +29,8 @@ class MateriaController extends Controller
      */
     public function create()
     {
-        //
+        $docentes = Docente::all();
+        return view('materia.create', compact('docentes'));
     }
 
     /**
@@ -46,7 +51,7 @@ class MateriaController extends Controller
         $this->validate($request,$reglas);
         $campos = $request->all();
         $materia = Materia::create($campos);
-        return $materia;
+        return redirect()->route('materia.index')->with('info',"La materia se creó exitosamente");
     }
 
     /**
@@ -58,7 +63,9 @@ class MateriaController extends Controller
     public function show($id)
     {
         $materia = Materia::findOrFail($id);
-        return $materia;
+        $materia->docente = Docente::findOrFail($materia->docente_id);
+        $estudiantes = $materia->estudiante;
+        return view('materia.show', compact('materia','estudiantes'));
     }
 
     /**
@@ -67,9 +74,11 @@ class MateriaController extends Controller
      * @param  \App\Materia  $materia
      * @return \Illuminate\Http\Response
      */
-    public function edit(Materia $materia)
+    public function edit($id)
     {
-        //
+        $materia = Materia::findOrFail($id);
+        $docentes = Docente::all();
+        return view('materia.update', compact('materia','docentes'));
     }
 
     /**
@@ -79,13 +88,21 @@ class MateriaController extends Controller
      * @param  \App\Materia  $materia
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $materium)
     {
-        $materia = Materia::findOrFail($id);
+        $reglas = [
+            "nombre" => 'required',
+            "creditos" => 'required',
+            "horas" => 'required',
+            "descripcion" => 'required',
+            "docente_id" => 'required',
+        ];
+        $this->validate($request,$reglas);
+        $materia = Materia::findOrFail($materium);
         $campos = $request->all();
         $materia->fill($campos);
         $materia->save();
-        return $materia;
+        return redirect()->route('materia.index')->with('info',"La materia se actualizó exitosamente");
     }
 
     /**
@@ -96,8 +113,13 @@ class MateriaController extends Controller
      */
     public function destroy($id)
     {
-        $materia = Materia::findOrFail($id);
-        $materia->delete();
-        return $materia;
+        
+        try {
+            $materia = Materia::findOrFail($id);
+            $materia->delete();
+        return redirect()->route('materia.index')->with('info', "Se elimininó la materia exitosamente");
+        } catch (\Throwable $th) {
+            return redirect()->route('materia.index')->with('error', "No se puede elimininar la materia porque esta relacionado");
+        }
     }
 }

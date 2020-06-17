@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Estudiantes</title>
+    <title>Materias</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 </head>
 
@@ -13,21 +13,20 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        Listado de Estudiantes
-                        <a href="{{route('estudiante.create')}}" class="btn btn-success btn-sm float-right">Nuevo</a>
+                        Materia: {{$materia->nombre}} 
                     </div>
                     <div class="card-body">
-                    @if(session('error'))
-                        <div class="alert alert-danger">
-                            {{session('error')}}
-                        </div>
-                        @endif
-                        @if(session('info'))
-                        <div class="alert alert-success">
-                            {{session('info')}}
-                        </div>
-                        @endif
-                        <table class="table table-hover table-sm">
+                        <p>Creditos: {{$materia->creditos}} </p>
+                        <p>Horas: {{$materia->horas}} </p>
+                        <p>Descripcion: {{$materia->descripcion}} </p>
+                        <p>docente: {{$materia->docente->nombre}} {{$materia->docente->apellido}} </p>
+                        <p><a href="{{route('docente.show',$materia->docente->id)}}"  class="btn btn-success">Ver Docente</a></p>
+                        
+
+                    </div>
+
+                    <div>
+                    <table class="table table-hover table-sm">
                             <thead>
                                 <th>Nombre</th>
                                 <th>Apellido</th>
@@ -45,25 +44,17 @@
                                     <td>{{ $estudiante->apellido }} </td>
                                     <td>{{$estudiante->telefono}} </td>
                                     <td>{{$estudiante->email}} </td>
-                                    <!-- <td>{{$estudiante->genero=='m' ? "Masculino": "Femenino"}} </td>
-                                    <td>{{$estudiante->direccion}} </td>
-                                    <td>{{$estudiante->nacimiento}} </td> -->
                                     <td>
 
                                         <a href="{{route('estudiante.show',$estudiante->id)}}"  class="btn btn-success">Ver</a>
-                                        <a href="{{route('estudiante.edit',$estudiante->id)}}"  class="btn btn-warning">Editar</a>
                                         
-                                        <form  action="{{route('estudiante.destroy', $estudiante->id)}}" method="post">
-                                            @method('delete')
-                                            @csrf
-                                            <button type="submit" class="btn btn-danger">Eliminar</button>
-                                        </form>
                                     </td>
                                 </tr>
                                 @endforeach
                             </tbody>
                         </table>
                     </div>
+
                 </div>
             </div>
         </div>
