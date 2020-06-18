@@ -14,12 +14,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    //return view('welcome');
+    return redirect()->route('home');
 });
 
-Route::resource('estudiante', 'EstudianteController');
-Route::resource('docente', 'DocenteController');
-Route::resource('materia', 'MateriaController');
+Route::middleware('auth')->group(function () {
+    Route::resource('estudiante', 'EstudianteController');
+    Route::resource('docente', 'DocenteController');
+    Route::resource('materia', 'MateriaController');
+});
+
 /*
  Route::get('estudiante', 'EstudianteController@index')->name('estudiante.index');
  Route::get('estudiante/crear', 'EstudianteController@create')->name('estudiante.create'); 
@@ -28,3 +32,6 @@ Route::get('estudiante/{estudiante}', 'EstudianteController@show');
 
 Route::post('estudiante', 'EstudianteController@store')->name('estudiante.store'); 
 Route::delete('estudiante/{id}', 'EstudianteController@destroy')->name('estudiante.destroy');*/
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

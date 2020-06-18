@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <title>Docentes</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-</head>
-
-<body>
+@extends('layouts.app')
+@section('title', 'Docentes')
+@section('content')
     <div class="container">
         <br>
         <div class="row">
@@ -27,7 +21,6 @@
 
                         </div>
                         @endif
-                        {{$docente->id}}
                         <form action="{{route('docente.update',$docente->id)}}" method="post">
                             @method('put')
                             @csrf
@@ -103,7 +96,4 @@
         </div>
     </div>
 
-
-</body>
-
-</html>
+    @endsection

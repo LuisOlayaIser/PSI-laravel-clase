@@ -18,5 +18,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+/* 
+Route::resource('estudiante', 'EstudianteController');
+Auth::routes();
 
-/* Route::resource('estudiante', 'EstudianteController'); */
+Route::get('/home', 'HomeController@index')->name('home'); */
